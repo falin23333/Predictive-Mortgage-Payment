@@ -1,7 +1,12 @@
-nltk
+
+
+
+
+torch==1.12.1
+
 streamlit_lottie
 seaborn
-openai
+scikit-learn == 1.0.2
+xgboost
 pandas
 plotly
-scikit-learn == 1.0.2
