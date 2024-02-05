@@ -1,0 +1,83 @@
+*********************************************
+               PROYECTO DE MACHINE LEARNING
+*********************************************
+
+Este proyecto tiene como objetivo predecir si un cliente pagará su deuda con el banco por la adquisición de una hipoteca.
+
+
+DATASET:
+El dataset contiene alrededor de 100,000 instancias con las siguientes columnas:
+
+ - Loan ID
+  - Customer ID
+  - Loan Status
+  - Current Loan Amount
+  - Term
+  - Credit Score
+  - Annual Income
+  - Years in Current Job
+  - Home Ownership
+  - Purpose
+  - Monthly Debt
+  - Years of Credit History
+  - Months Since Last Delinquent
+  - Number of Open Accounts
+  - Number of Credit Problems
+  - Current Credit Balance
+  - Maximum Open Credit
+  - Bankruptcies
+  - Tax Liens
+
+ANÁLISIS EDA:
+Realizamos un análisis exploratorio de datos visualizando la distribución de las features.
+
+MODELOS CON CLASES DESBALANCEADAS:
+Para las pruebas con la variable target desbalanceada:
+
+- Eliminamos algunas columnas como Loan ID o Customer ID.
+- Imputamos valores nulos con la media para columnas como Credit Score, Annual Income, Years in Current Job, Months Since Last Delinquent.
+- Estandarizamos nuestras variables continuas y codificamos nuestras variables categóricas usando LabelEncoder.
+- Entrenamos varios modelos, pero las métricas obtenidas no fueron satisfactorias.
+
+| Model                | Accuracy | Recall | Precision | F1-Score | Training Time |
+|----------------------|----------|--------|-----------|----------|---------------|
+| Decision Tree        | 0.73     | 0.27   | 0.28      | 0.28     | 3.069s        |
+| Random Forest        | 0.81     | 0.00   | 0.36      | 0.01     | 40.566s       |
+| Logistic Regression  | 0.81     | 0.00   | 1.00      | 0.00     | 0.378s        |
+| KNN                  | 0.78     | 0.08   | 0.28      | 0.13     | 0.068s        |
+| SVC                  | 0.81     | 0.00   | 0.00      | 0.00     | 588.360s      |
+| Gradient Boosting    | 0.81     | 0.00   | 0.44      | 0.00     | 9.133s        |
+| AdaBoost             | 0.81     | 0.00   | 0.45      | 0.01     | 2.303s        |
+| Extreme Tree         | 0.81     | 0.02   | 0.51      | 0.03     | 59.132s       |
+
+MODELOS CON CLASES BALANCEADAS:
+Balanceamos la variable target manualmente eliminando instancias de la clase mayoritaria y eliminando outliers.
+
+Entrenamos varios modelos después de estandarizar variables numéricas y codificar categóricas usando un pipeline:
+
+| Model                | Accuracy | Recall | Precision | F1-Score | Training Time |
+|----------------------|----------|--------|-----------|----------|---------------|
+| Decision Tree        | 0.82     | 0.77   | 0.79      | 0.78     | 1.607s        |
+| Random Forest        | 0.87     | 0.70   | 0.98      | 0.82     | 24.220s       |
+| Logistic Regression  | 0.72     | 0.45   | 0.81      | 0.58     | 0.415s        |
+| KNN                  | 0.73     | 0.60   | 0.71      | 0.65     | 0.141s        |
+| SVC                  | 0.76     | 0.53   | 0.85      | 0.65     | 73.121s       |
+| Gradient Boosting    | 0.87     | 0.69   | 1.00      | 0.82     | 7.500s        |
+| AdaBoost             | 0.87     | 0.69   | 1.00      | 0.82     | 1.920s        |
+| Extreme Tree         | 0.82     | 0.66   | 0.88      | 0.75     | 41.850s       |
+
+
+GRIDSEARCH Y MODELO SELECCIONADO:
+Realizamos un gridsearch con AdaBoost y seleccionamos el siguiente conjunto óptimo de hiperparámetros:
+
+Best Params: {'Clasificacion__algorithm': 'SAMME', 'Clasificacion__learning_rate': 0.1, 'Clasificacion__n_estimators': 200}
+
+PIPELINE Y MÉTRICAS FINALES:
+Utilizamos un pipeline que incluye preprocesamiento y modelo. El modelo AdaBoost se seleccionó para producción y se obtuvieron las siguientes métricas:
+
+Accuracy: 0.8697
+Precision: 1.00
+Recall: 0.69
+
+*********************************************
+```
