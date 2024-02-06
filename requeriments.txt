@@ -9,4 +9,4 @@ seaborn
 scikit-learn == 1.0.2
 xgboost
 pandas
-plotly
+plotly>=5.3.1
