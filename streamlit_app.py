@@ -1,15 +1,14 @@
 import streamlit as st
 import pandas as pd
-import plotly.subplots as sp
-import plotly.graph_objects as go
+
 import pickle
 import requests
 from streamlit_lottie import st_lottie
-import numpy as np
+
 from sklearn.model_selection import train_test_split
 
-import matplotlib.pyplot as plt
 
+import plotly.express as px
 
 
 
@@ -136,40 +135,20 @@ with open('models/pipeline_AdaBoost.pkl', 'rb') as file:
             model = pickle.load(file)
 
 
+# Agregar un botón para mostrar la visualización de datos
+if st.button('Visualización de Datos'):
+    # Definir el mapa de colores para las clases de préstamo
+    color_map = {'Fully Paid': 'green', 'Charged Off': 'red'}
 
-# Load your dataset
-# df_train = pd.read_csv('your_dataset.csv')
+    
 
-# Set up subplots
-fig = sp.make_subplots(rows=6, cols=3, subplot_titles=("Loan Status", "Current Loan Amount", "Term",
-                                                      "Credit Score", "Annual Income", "Years in Current Job",
-                                                      "Home Ownership", "Purpose", "Monthly Debt",
-                                                      "Years of Credit History", "Months Since Last Delinquent",
-                                                      "Number of Open Accounts", "Number of Credit Problems",
-                                                      "Current Credit Balance", "Maximum Open Credit",
-                                                      "Bankruptcies", "Tax Liens"))
+    # Crear boxplots para cada columna especificada
+    for column in ['Current Loan Amount', 'Annual Income', 'Monthly Debt', 'Current Credit Balance',
+                   'Maximum Open Credit', "Credit Score", "Years of Credit History",
+                   "Number of Open Accounts", "Months since last delinquent"]:
+        # Crear el boxplot
+        fig = px.box(df_train, y=column, color="Loan Status", title=f'{column} Distribution by Loan Status',
+                     color_discrete_map=color_map)
 
-# Populate subplots
-fig.add_trace(go.Histogram(x=df_train["Loan Status"]), row=1, col=1)
-fig.add_trace(go.Histogram(x=df_train["Current Loan Amount"]), row=1, col=2)
-fig.add_trace(go.Histogram(x=df_train["Term"]), row=1, col=3)
-fig.add_trace(go.Histogram(x=df_train["Credit Score"]), row=2, col=1)
-fig.add_trace(go.Histogram(x=df_train["Annual Income"]), row=2, col=2)
-fig.add_trace(go.Histogram(y=df_train["Years in current job"]), row=2, col=3)
-fig.add_trace(go.Histogram(x=df_train["Home Ownership"]), row=3, col=1)
-fig.add_trace(go.Histogram(y=df_train["Purpose"]), row=3, col=2)
-fig.add_trace(go.Histogram(x=df_train["Monthly Debt"]), row=3, col=3)
-fig.add_trace(go.Histogram(x=df_train["Years of Credit History"]), row=4, col=1)
-fig.add_trace(go.Histogram(x=df_train["Months since last delinquent"]), row=4, col=2)
-fig.add_trace(go.Histogram(x=df_train["Number of Open Accounts"]), row=4, col=3)
-fig.add_trace(go.Histogram(x=df_train["Number of Credit Problems"]), row=5, col=1)
-fig.add_trace(go.Histogram(x=df_train["Current Credit Balance"]), row=5, col=2)
-fig.add_trace(go.Histogram(x=df_train["Maximum Open Credit"]), row=5, col=3)
-fig.add_trace(go.Histogram(x=df_train["Bankruptcies"]), row=6, col=1)
-fig.add_trace(go.Histogram(x=df_train["Tax Liens"]), row=6, col=2)
-
-# Update layout
-fig.update_layout(title_text="Distribucion Variables", showlegend=False, height=1200, width=1000)
-
-# Display the plot
-st.plotly_chart(fig)
+        # Mostrar el gráfico en la interfaz de Streamlit
+        st.plotly_chart(fig)
