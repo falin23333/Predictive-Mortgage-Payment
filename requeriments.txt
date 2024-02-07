@@ -1,12 +1,6 @@
-
-
-
-torch==1.12.1
-
 streamlit_lottie
 seaborn
 scikit-learn == 1.0.2
 xgboost
 pandas
 plotly
-streamlit_lottie
