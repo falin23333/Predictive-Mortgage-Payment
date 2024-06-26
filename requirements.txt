@@ -1,6 +1,11 @@
 streamlit_lottie
 seaborn
-scikit-learn == 1.0.2
+
 xgboost
 pandas
 plotly
+numpy==1.21.0
+scipy==1.7.0
+scikit-learn==0.24.2
+joblib==1.0.1
+threadpoolctl==2.1.0
