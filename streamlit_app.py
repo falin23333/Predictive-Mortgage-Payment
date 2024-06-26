@@ -127,7 +127,7 @@ with st.container():
         
         if prediction == 1:
 
-            st.write(f":red[No paga la deuda]")
+            st.write(f":red[No paga la deudA]")
         else:
             st.write(f":green[Paga la deuda]")
 
